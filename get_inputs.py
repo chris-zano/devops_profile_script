@@ -3,6 +3,8 @@ This module contains definitions for retrieving user information
 """
 
 import re
+import sys
+
 
 def get_username():
     """
@@ -29,7 +31,7 @@ def get_username():
             tries_count += 1
 
     print("Too many invalid attempts. Please try again later.")
-    return None
+    sys.exit(1)
 
 
 def get_phone_number():
@@ -63,7 +65,7 @@ def get_phone_number():
             tries_count += 1
 
     print("Too many invalid attempts. Please try again later.")
-    return None
+    sys.exit(1)
 
 def get_email():
     """
@@ -93,5 +95,5 @@ def get_email():
             tries_count += 1
 
     print("Too many invalid attempts. Please try again later.")
-    return None
+    sys.exit(1)
 
