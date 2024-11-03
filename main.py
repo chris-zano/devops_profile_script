@@ -3,6 +3,10 @@ import fnmatch
 import os
 import re
 
+
+VALID_EMAIL_PATTERN = '^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$'
+VALID_PHONE_PATTERN = '^\+?[1-9]\d{0,2}[-\s]?(\d{1,4}[-\s]?){1,4}\d{1,4}$'
+
 def get_username():
     try:
         return os.getlogin()
@@ -19,7 +23,15 @@ def get_profile_data() -> dict:
     """returns dict of user's profile data """
 
     name = input("Enter your name: ")
-    phone = input("Enter your phone number: ")
+    phone = input(
+        "Please enter your phone number in international format:\n"
+        "Examples:\n"
+        "- +1 123-456-7890 (USA)\n"
+        "- +233 20 1234 5678 (GHANA)\n"
+        "- +234 98765 43210 (NIGERIA)\n"
+        "Your phone number: "
+    )
+
     email = input("Enter your email address: ")
 
     return {"name": name, "phone": phone, "email": email}
