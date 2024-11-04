@@ -29,14 +29,7 @@ def get_phone_number():
     tries_count = 0
 
     while tries_count < 3:
-        phone_number = input(
-            "Please enter your phone number in international format:\n"
-            "Examples:\n"
-            "- +233 123-456-7890 (GHANA)\n"
-            "- +234 20 1234 5678 (NIGERIA)\n"
-            "- +1 98765 43210 (USA)\n"
-            "Your phone number: "
-        )
+        phone_number = input("Please enter your phone number: ")
 
         if re.match(phone_pattern, phone_number):
             print("Phone number accepted.")
