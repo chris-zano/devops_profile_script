@@ -1,18 +1,12 @@
-import re
+"""
+This module contains definitions that handle the
+reading and writing of user profile data to/from file
+"""
+
 from get_inputs import get_username, get_email, get_phone_number
 
-
-def is_valid_filepath(filepath: str, regex: re) -> bool:
-    if not isinstance(filepath, str):
-        return False
-
-    if not re.match(regex, filepath):
-        return False
-
-    return True
-
-
 def get_profile_data() -> dict:
+    """returns a dictionary of retrieved user data"""
     name = get_username()
     phone = get_phone_number()
     email = get_email()
@@ -20,6 +14,7 @@ def get_profile_data() -> dict:
     return {"name": name, "phone": phone, "email": email}
 
 def save_profile_data(profile: dict, filepath: str) -> None:
+    """saves user profile to file"""
     try:
         with open(filepath, 'w', encoding='utf-8') as file:
             file.write(f"Name: {profile['name']}\n")
@@ -35,12 +30,7 @@ def save_profile_data(profile: dict, filepath: str) -> None:
 
 
 def load_profile_data(filepath: str) -> list:
-    valid_filepath_pattern = '^/home/[a-z0-9_-]{3,16}/.profile.txt$'
-    is_path_valid = is_valid_filepath(filepath, valid_filepath_pattern)
-    if not is_path_valid:
-        raise ValueError("Filepath must match '/home/{username}/.profile.txt' "
-                         "format")
-
+    """reads user profile data from file"""
     try:
         with open(filepath, 'r', encoding='utf-8') as file:
             content = file.readlines()

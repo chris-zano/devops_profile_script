@@ -1,18 +1,24 @@
 #!/usr/bin/bash
 import os
+import sys
 
 from profile_data import load_profile_data, get_profile_data, save_profile_data
 
 def get_login_username():
+    """returns the username of the currently logged-in user"""
     try:
         return os.getlogin()
     except OSError:
         return os.environ.get('USER') or os.environ.get('USERNAME') or 'unknown_user'
 
 def has_home_dir(cwd: str, username: str) -> bool:
+    """Check is the current user has a directory with their username in
+    home directory
+    """
     return cwd.endswith(username)
 
 def handle_profile_creation(profile_path: str):
+    """handles the creation of a user's profile.txt"""
     if os.path.isfile(profile_path):
         profile = load_profile_data(profile_path)
         print("Current Profile Information:")
@@ -36,6 +42,10 @@ def handle_profile_creation(profile_path: str):
 def main():
     username = get_login_username()
     home_dir = os.path.expanduser('~')
+
+    if username == "unknown_user":
+        print('could not get login username')
+        sys.exit(1)
 
     if has_home_dir(home_dir, username):
         profile_path = os.path.join(os.path.expanduser('~'), '.profile.txt')
