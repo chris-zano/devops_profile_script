@@ -19,29 +19,13 @@ def get_username():
 
 def get_phone_number():
     """
-       Prompts the user to enter a valid phone number in international format.
+       Prompts the user to enter a valid phone number.
 
        Returns:
-           str: A valid phone number or None (if
-           the maximum number of attempts is reached).
+           str: A valid phone number.
     """
-    phone_pattern = r'^\+?[1-9]\d{1, 14}'
-    tries_count = 0
-
-    while tries_count < 3:
-        phone_number = input("Please enter your phone number: ")
-
-        if re.match(phone_pattern, phone_number):
-            print("Phone number accepted.")
-            return phone_number
-        else:
-            print(
-                "Invalid format. Please make sure to enter your phone number"
-                " in international format (e.g., +1234567890).")
-            tries_count += 1
-
-    print("Too many invalid attempts. Please try again later.")
-    sys.exit(1)
+    phone_number = input("Please enter your phone number: ")
+    return phone_number
 
 def get_email():
     """

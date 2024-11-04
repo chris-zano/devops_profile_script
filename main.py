@@ -4,15 +4,17 @@ import os
 
 from profile_data import load_profile_data, get_profile_data, save_profile_data
 
+
 def get_login_username():
     try:
         return os.getlogin()
     except OSError:
         return os.environ.get('USER') or os.environ.get('USERNAME') or 'unknown_user'
 
-def is_valid_cwd(cwd: str, username: str) -> bool:
-    expected_path_pattern = f'/home/{username}/*'
-    return fnmatch.fnmatch(cwd, expected_path_pattern)
+
+def has_home_dir(cwd: str, username: str) -> bool:
+    return cwd.endswith(username)
+
 
 def handle_profile_creation(profile_path: str):
     if os.path.isfile(profile_path):
@@ -35,34 +37,22 @@ def handle_profile_creation(profile_path: str):
         save_profile_data(new_profile, profile_path)
         print("Profile created successfully.")
 
-def main():
-    username = get_login_username()
-    current_dir = os.getcwd()
-
-    if is_valid_cwd(current_dir, username):
-        profile_path = os.path.join('/home',username, '.profile.txt')
-
-        try:
-            handle_profile_creation(profile_path)
-        except TypeError as te:
-            print(te)
-        except ValueError as ve:
-            print(ve)
-
-    else:
-        try:
-            new_dir = os.path.expanduser("~")
-            os.makedirs(new_dir, exist_ok=True)
-            profile_path = os.path.join(new_dir, '.profile.txt')
-
-            print(f"Creating new directory: {new_dir}")
-            new_profile = get_profile_data()
-            save_profile_data(new_profile, profile_path)
-            print("Profile created successfully.")
-        except TypeError as te:
-            print(te)
-        except ValueError as ve:
-            print(ve)
 
 if __name__ == "__main__":
-    main()
+    username = get_login_username()
+    home_dir = os.path.expanduser('~')
+
+    if has_home_dir(home_dir, username):
+        profile_path = os.path.join(os.path.expanduser('~'), '.profile.txt')
+
+        handle_profile_creation(profile_path)
+
+    else:
+        new_dir = os.path.expanduser("~")
+        os.makedirs(new_dir, exist_ok=True)
+        profile_path = os.path.join(new_dir, '.profile.txt')
+
+        print(f"Creating new directory: {new_dir}")
+        new_profile = get_profile_data()
+        save_profile_data(new_profile, profile_path)
+        print("Profile created successfully.")

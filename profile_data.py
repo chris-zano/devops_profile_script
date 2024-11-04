@@ -20,16 +20,6 @@ def get_profile_data() -> dict:
     return {"name": name, "phone": phone, "email": email}
 
 def save_profile_data(profile: dict, filepath: str) -> None:
-    if not isinstance(profile, dict):
-        raise TypeError('Profile has to be of type dict')
-
-
-    valid_filepath_pattern = '^/home/[a-z0-9_-]{3,16}/.profile.txt$'
-    is_path_valid = is_valid_filepath(filepath, valid_filepath_pattern)
-    if not is_path_valid:
-        raise ValueError("Filepath must match '/home/{username}/.profile.txt' "
-                         "format")
-
     try:
         with open(filepath, 'w', encoding='utf-8') as file:
             file.write(f"Name: {profile['name']}\n")
