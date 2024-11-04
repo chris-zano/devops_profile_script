@@ -8,30 +8,13 @@ import sys
 
 def get_username():
     """
-       Prompts the user to enter a valid username.
+       Prompts the user to enter their.
 
        Returns:
-           str: A valid username or None (if
-           the maximum number of attempts is reached).
+           str: user's name
     """
-    valid_username_pattern = '^[a-z0-9_-]{1,32}$'
-
-    tries_count = 0
-
-    while tries_count < 3:
-        username = input("Enter your username (a-z, 0-9, _-): ")
-
-        if re.fullmatch(valid_username_pattern, username):
-            return username
-        else:
-            print(f'Username "{username}" cannot be used.\n'
-                  f'1. Can contain lowercase letters (a-z), digits (0-9), underscores (_), and hyphens (-).\n'
-                  f'2. Must be between 1 and 32 characters long.\n'
-                  f'3. Must start with a letter or an underscore.')
-            tries_count += 1
-
-    print("Too many invalid attempts. Please try again later.")
-    sys.exit(1)
+    username = input("Enter your name: ")
+    return username
 
 
 def get_phone_number():
@@ -42,7 +25,7 @@ def get_phone_number():
            str: A valid phone number or None (if
            the maximum number of attempts is reached).
     """
-    phone_pattern = r'^\+?[1-9]\d{0,2}[-\s]?(\d{1,4}[-\s]?){1,4}\d{1,4}$'
+    phone_pattern = r'^\+?[1-9]\d{1, 14}'
     tries_count = 0
 
     while tries_count < 3:
@@ -73,7 +56,7 @@ def get_email():
 
         Returns:
             str: A valid email or None (if
-            the maximum number of attempts is reached)).
+            the maximum number of attempts is reached).
     """
     email_pattern = r'^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$'
 
