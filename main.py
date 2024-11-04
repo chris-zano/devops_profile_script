@@ -1,9 +1,7 @@
 #!/usr/bin/bash
-import fnmatch
 import os
 
 from profile_data import load_profile_data, get_profile_data, save_profile_data
-
 
 def get_login_username():
     try:
@@ -11,10 +9,8 @@ def get_login_username():
     except OSError:
         return os.environ.get('USER') or os.environ.get('USERNAME') or 'unknown_user'
 
-
 def has_home_dir(cwd: str, username: str) -> bool:
     return cwd.endswith(username)
-
 
 def handle_profile_creation(profile_path: str):
     if os.path.isfile(profile_path):
@@ -24,7 +20,7 @@ def handle_profile_creation(profile_path: str):
             print(line)
 
         confirmation = input("Is this information up to date? (yes/no): ").strip().lower()
-        if confirmation == 'yes':
+        if confirmation == 'yes' or confirmation == 'y':
             print("You can continue using the terminal.")
             return
         else:
@@ -37,8 +33,7 @@ def handle_profile_creation(profile_path: str):
         save_profile_data(new_profile, profile_path)
         print("Profile created successfully.")
 
-
-if __name__ == "__main__":
+def main():
     username = get_login_username()
     home_dir = os.path.expanduser('~')
 
@@ -56,3 +51,6 @@ if __name__ == "__main__":
         new_profile = get_profile_data()
         save_profile_data(new_profile, profile_path)
         print("Profile created successfully.")
+
+if __name__ == "__main__":
+    main()
