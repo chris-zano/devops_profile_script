@@ -24,8 +24,29 @@ def get_phone_number():
        Returns:
            str: A valid phone number.
     """
-    phone_number = input("Please enter your phone number: ")
-    return phone_number
+
+    valid_phone_patter = r'^\+?[1-9]\d{0,2}[-\s]?(\d{1,4}[-\s]?){1,4}\d{1,4}$'
+    tries_count = 0
+
+    while tries_count < 3:
+        phone_number = input("Please enter your phone number in international format:\n"
+        "Examples:\n"
+        "- +1 123-456-7890 (USA)\n"
+        "- +233 20 1234 5678 (GHANA)\n"
+        "- +234 98765 43210 (NIGERIA)\n"
+        "Your phone number: ")
+
+        if re.fullmatch(valid_phone_patter, phone_number):
+            return phone_number
+
+        print("Invalid input")
+        print("Please enter your phone number in international format:\n"
+        "Examples:\n"
+        "- +1 123-456-7890 (USA)\n"
+        "- +233 20 1234 5678 (GHANA)\n"
+        "- +234 98765 43210 (NIGERIA)\n"
+        "Your phone number: ")
+        tries_count += 1
 
 def get_email():
     """
